@@ -30,12 +30,42 @@ public class Account implements Comparable{
 
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public void setBalance(double b) {
+        this.balance = b > 0.0 ? b: 0.0;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return accountNumber + " " + owner
+                + " " + city.cityName + " "
+                + gender + " " + balance;
     }
 
     @Override
     public int compareTo(Object o) {
-        return 0;
+        return this.owner.compareTo(((Account) o).owner);
     }
+
+    public void deposit(double amount){
+        if (amount >0){
+            setBalance(balance + amount);
+        }
+    }
+    public double withdraw(double amount){
+        if (amount > 0){
+            if (amount < balance){
+                setBalance(balance - amount);
+            }
+            else{
+                amount = balance;
+                setBalance(0.0);
+            }
+            return amount;
+        }
+        return 0;
+
+    }
+
 }
