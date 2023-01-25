@@ -1,0 +1,41 @@
+import java.util.Date;
+
+public class Account implements Comparable{
+
+    static int nextAccountNumber = 10;
+    int accountNumber;
+    String owner;
+    City city;
+    char gender;
+    double balance;
+    Date openDate;
+
+    public Account(String owner, City city, char gender) {
+        accountNumber = nextAccountNumber;
+        nextAccountNumber += 10;
+        this.owner = owner;
+        this.city = city;
+        this.gender = gender;
+
+        balance = 0.0;
+        openDate = null;
+    }
+
+    public Account(int accountNumber, String owner, City city, char gender, double balance) {
+        this.accountNumber = accountNumber;
+        this.owner = owner;
+        this.city = city;
+        this.gender = gender;
+        setBalance(balance);
+
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
+}
