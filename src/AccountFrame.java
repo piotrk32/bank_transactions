@@ -69,6 +69,7 @@ public class AccountFrame extends JFrame {
             //Buttons
             maleRDB = new JRadioButton("Male", true);
             femaleRDB = new JRadioButton("Female");
+            genderBTNGRP = new ButtonGroup();
             genderBTNGRP.add(maleRDB);
             genderBTNGRP.add(femaleRDB);
 
@@ -78,6 +79,80 @@ public class AccountFrame extends JFrame {
             quitBTN = new JButton("Quit");
             depositBTN = new JButton("Deposit");
             withdrawBTN = new JButton("Withdraw");
+
+            //Table
+            accountLSTMDL= new DefaultListModel<>();
+            accountsLST = new JList<>(accountLSTMDL);
+
+            //Panels
+
+            p1 = new JPanel(); p1.setBounds(5, 5, 300, 150);
+            p1.setLayout(new GridLayout(5, 2));
+
+            p2 = new JPanel(); p2.setBounds(5, 155, 300, 40);
+            p2.setLayout(new FlowLayout());
+
+            p3 = new JPanel(); p3.setBounds(5, 195, 600, 40);
+            p3.setLayout(new FlowLayout());
+
+            p4 = new JPanel(); p4.setBounds(300, 5, 300, 190);
+            p4.setLayout(new BorderLayout());
+
+            p5 = new JPanel(); p5.setBounds(5, 240, 500, 120);
+            p5.setLayout(new BorderLayout());
+
+            //Adding components to panel
+
+            p1.add(accountNumberLBL);
+            p1.add(accountNumberTXT);
+            p1.add(ownerLBL);
+            p1.add(ownerTXT);
+            p1.add(balanceLBL);
+            p1.add(balanceTXT);
+            p1.add(cityLBL);
+            p1.add(citiesCMB);
+            p1.add(maleRDB);
+            p1.add(femaleRDB);
+
+            p2.add(newBTN);
+            p2.add(saveBTN);
+            p2.add(showBTN);
+            p2.add(quitBTN);
+
+            p3.add(amountLBL);
+            p3.add(amountTXT);
+            p3.add(depositBTN);
+            p3.add(withdrawBTN);
+
+            p4.add(accountsLST);
+
+
+
+            //Adding Panels to fame
+
+            add(p1);
+            add(p2);
+            add(p3);
+            add(p4);
+            add(p5);
+            // Table
+
+            tableModel = new DefaultTableModel();
+            table = new JTable(tableModel);
+            tableModel.addColumn("TransactionNumber");
+            tableModel.addColumn("TransactionDate");
+            tableModel.addColumn("TransactionType");
+            tableModel.addColumn("TransactionAmount");
+
+            JScrollPane scrollPane = new JScrollPane(table);
+            p5.add(scrollPane);
+
+
+
+
+
+
+
 
 
 
