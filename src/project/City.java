@@ -1,3 +1,5 @@
+package project;
+
 public class City {
     String cityName;
     String regionName;

@@ -1,5 +1,6 @@
+package project;
+
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -38,15 +39,15 @@ public class AccountFrame extends JFrame {
     ArrayList<Tranaction> transList = new ArrayList<>();
 
     public AccountFrame(){
-        super("Account operations ");
+        super("project.Account operations ");
         setLayout(null);
         setSize(600, 400);
 
             //labels
-            accountNumberLBL = new JLabel("Account Number");
+            accountNumberLBL = new JLabel("project.Account Number");
             ownerLBL = new JLabel("Owner");
             balanceLBL = new JLabel("Balance");
-            cityLBL = new JLabel("City");
+            cityLBL = new JLabel("project.City");
             genderLBL = new JLabel("Gender");
             amountLBL = new JLabel("Amount");
 
@@ -224,10 +225,10 @@ public class AccountFrame extends JFrame {
 
 
 
-    public static void main(String[] args){
-        AccountFrame af = new AccountFrame();
-        af.setVisible(true);
-        af.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    }
+//    public static void main(String[] args){
+//        project.AccountFrame af = new project.AccountFrame();
+//        af.setVisible(true);
+//        af.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//    }
 }

@@ -1,3 +1,5 @@
+package project;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -25,7 +27,7 @@ public class Tranaction implements Comparable<Tranaction>, Serializable {
 
     @Override
     public String toString() {
-        return "Tranaction{" +
+        return "project.Tranaction{" +
                 "transactionNumber=" + transactionNumber +
                 ", account=" + account +
                 ", date=" + date +
