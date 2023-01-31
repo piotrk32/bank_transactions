@@ -5,7 +5,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -44,7 +46,7 @@ public class AccountFrame extends JFrame {
         setSize(600, 400);
 
             //labels
-            accountNumberLBL = new JLabel("project.Account Number");
+            accountNumberLBL = new JLabel("Account Number");
             ownerLBL = new JLabel("Owner");
             balanceLBL = new JLabel("Balance");
             cityLBL = new JLabel("project.City");
@@ -201,7 +203,38 @@ public class AccountFrame extends JFrame {
                          newRec = false;
                      }
                  }
+
              });
+             //show button
+
+            showBTN.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String s = "";
+                    Iterator<Account> it = accountSet.iterator();
+                    while(it.hasNext()){
+                        s += it.next().toString() + "\n";
+                        JOptionPane.showMessageDialog(null, s);
+                    }
+                }
+            });
+            //deposit button
+            depositBTN.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (!newRec && amountTXT.getText().length() !=0){
+                        //Adding transaction to table
+                        Tranaction t = new Tranaction(account, LocalDate.now(),
+                                'D', Double.parseDouble(amountTXT.getText()));
+
+                        DisplayTransactionsInTable(t);
+                        //Perform deposit from account
+                        account.deposit(Double.parseDouble(amountTXT.getText()));
+                        balanceTXT.setText(String.valueOf(account.balance));
+                    }
+                }
+            });
+
 
 
 
@@ -220,9 +253,17 @@ public class AccountFrame extends JFrame {
 
     }
 
-
-
-
+    private void DisplayTransactionsInTable(Tranaction t) {
+        //Displaing data into table
+        tableModel.addRow(new Object[]{
+                t.getTransactionNumber(),
+                t.getDate(),
+                t.getOperation(),
+                t.getAmount()
+        });
+        //Adding object to arraylist
+        transList.add(t);
+    }
 
 
 //    public static void main(String[] args){
