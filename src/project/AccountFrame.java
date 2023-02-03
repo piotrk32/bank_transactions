@@ -1,6 +1,8 @@
-package project;
+package bank_transactions.src.project;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
+
 
 
 //swing
@@ -234,22 +237,53 @@ public class AccountFrame extends JFrame {
                     }
                 }
             });
+            //withdraw button
+            withdrawBTN.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (!newRec && amountTXT.getText().length() != 0){
+                        //Adding transaction to table
+                        Tranaction t = new Tranaction(
+                                account, LocalDate.now(),
+                                'W',
+                                Double.parseDouble(amountTXT.getText())
+                                );
 
+                        DisplayTransactionsInTable(t);
+                        //Perform withdraw on account
 
+                        account.withdraw(Double.parseDouble(amountTXT.getText()));
+                        balanceTXT.setText(String.valueOf(account.balance));
+                    }
+                }
+            });
+            accountsLST.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent e) {
+                    account = x = accountsLST.getSelectedValue();
+                    accountNumberTXT.setText(String.valueOf(account.accountNumber));
+                    ownerTXT.setText(account.owner);
+                    citiesCMB.setSelectedItem(account.city);
 
+                    if (account.gender == 'M'){
+                        maleRDB.setSelected(true);
+                    }
+                    else{
+                        femaleRDB.setSelected(true);
+                    }
+                    balanceTXT.setText(String.valueOf(account.balance));
+                    amountTXT.setEnabled(true);
+                    depositBTN.setEnabled(true);
+                    newRec = false;
 
+                    //Clear table
+                    for (int i = tableModel.getRowCount() - 1; i >= 0; i--){
+                        tableModel.removeRow(i);
 
+                    }
 
-
-
-
-
-
-
-
-
-
-
+                }
+            });
 
     }
 
@@ -258,18 +292,11 @@ public class AccountFrame extends JFrame {
         tableModel.addRow(new Object[]{
                 t.getTransactionNumber(),
                 t.getDate(),
-                t.getOperation(),
+                 t.getOperation(),
                 t.getAmount()
         });
         //Adding object to arraylist
         transList.add(t);
     }
 
-
-//    public static void main(String[] args){
-//        project.AccountFrame af = new project.AccountFrame();
-//        af.setVisible(true);
-//        af.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//    }
 }

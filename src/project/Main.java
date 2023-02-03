@@ -1,5 +1,4 @@
-package project;
-
+package bank_transactions.src.project;
 import javax.swing.*;
 
 public class Main {

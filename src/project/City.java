@@ -1,4 +1,4 @@
-package project;
+package bank_transactions.src.project;
 
 public class City {
     String cityName;

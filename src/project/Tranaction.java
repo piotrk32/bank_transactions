@@ -1,4 +1,4 @@
-package project;
+package bank_transactions.src.project;
 
 import java.io.Serializable;
 import java.time.LocalDate;
