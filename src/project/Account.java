@@ -1,4 +1,4 @@
-package bank_transactions.src.project;
+package project;
 
 import java.util.Date;
 
