@@ -1,6 +1,8 @@
 package project;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,8 +10,10 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
 
 
 //swing
@@ -38,7 +42,7 @@ public class AccountFrame extends JFrame {
     JTable table;
     DefaultTableModel tableModel;
 
-    ArrayList<Tranaction> transList = new ArrayList<>();
+    ArrayList<Transaction> transList = new ArrayList<>();
 
     public AccountFrame(){
         super("project.Account operations ");
@@ -49,7 +53,7 @@ public class AccountFrame extends JFrame {
             accountNumberLBL = new JLabel("Account Number");
             ownerLBL = new JLabel("Owner");
             balanceLBL = new JLabel("Balance");
-            cityLBL = new JLabel("project.City");
+            cityLBL = new JLabel("City");
             genderLBL = new JLabel("Gender");
             amountLBL = new JLabel("Amount");
 
@@ -224,7 +228,7 @@ public class AccountFrame extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     if (!newRec && amountTXT.getText().length() !=0){
                         //Adding transaction to table
-                        Tranaction t = new Tranaction(account, LocalDate.now(),
+                        Transaction t = new Transaction(account, LocalDate.now(),
                                 'D', Double.parseDouble(amountTXT.getText()));
 
                         DisplayTransactionsInTable(t);
@@ -234,26 +238,71 @@ public class AccountFrame extends JFrame {
                     }
                 }
             });
+        //withdraw button
+        withdrawBTN.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!newRec && amountTXT.getText().length() != 0){
+                    //Adding transaction to table
+                    Transaction t = new Transaction(
+                            account, LocalDate.now(),
+                            'W',
+                            Double.parseDouble(amountTXT.getText())
+                    );
 
+                    DisplayTransactionsInTable(t);
+                    //Perform withdraw on account
 
+                    account.withdraw(Double.parseDouble(amountTXT.getText()));
+                    balanceTXT.setText(String.valueOf(account.balance));
+                }
+            }
+        });
+        accountsLST.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                account = x = accountsLST.getSelectedValue();
+                accountNumberTXT.setText(String.valueOf(account.accountNumber));
+                ownerTXT.setText(account.owner);
+                citiesCMB.setSelectedItem(account.city);
 
+                if (account.gender == 'M'){
+                    maleRDB.setSelected(true);
+                }
+                else{
+                    femaleRDB.setSelected(true);
+                }
+                balanceTXT.setText(String.valueOf(account.balance));
+                amountTXT.setEnabled(true);
+                depositBTN.setEnabled(true);
+                newRec = false;
 
+                //Clear table
+                for (int i = tableModel.getRowCount() - 1; i >= 0; i--){
+                    tableModel.removeRow(i);
 
+                }
 
-
-
-
-
-
-
-
-
+            }
+        });
 
 
 
     }
+    private void SearchTransactionList(int accNumber){
+        List<Transaction> filteredList = new ArrayList<>();
+        //iteration
+        for (Transaction t: transList){
+            //filter value contains accNumber
+            if(t.getAccount().accountNumber == accNumber){
+                filteredList.add(t);
+            }
 
-    private void DisplayTransactionsInTable(Tranaction t) {
+        }
+
+    }
+
+    private void DisplayTransactionsInTable(Transaction t) {
         //Displaing data into table
         tableModel.addRow(new Object[]{
                 t.getTransactionNumber(),
@@ -266,10 +315,4 @@ public class AccountFrame extends JFrame {
     }
 
 
-//    public static void main(String[] args){
-//        project.AccountFrame af = new project.AccountFrame();
-//        af.setVisible(true);
-//        af.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//    }
 }

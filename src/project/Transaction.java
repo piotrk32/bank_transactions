@@ -3,7 +3,7 @@ package project;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Tranaction implements Comparable<Tranaction>, Serializable {
+public class Transaction implements Comparable<Transaction>, Serializable {
 
     private static int next = 1;
     int transactionNumber;
@@ -12,7 +12,7 @@ public class Tranaction implements Comparable<Tranaction>, Serializable {
     char operation;
     double amount;
 
-    public Tranaction(Account account, LocalDate date, char operation, double amount) {
+    public Transaction(Account account, LocalDate date, char operation, double amount) {
         this.account = account;
         this.date = date;
         this.operation = operation;
@@ -21,7 +21,7 @@ public class Tranaction implements Comparable<Tranaction>, Serializable {
     }
 
     @Override
-    public int compareTo(Tranaction o) {
+    public int compareTo(Transaction o) {
         return this.transactionNumber - o.transactionNumber;
     }
 
