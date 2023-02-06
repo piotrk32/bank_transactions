@@ -162,7 +162,7 @@ public class AccountFrame extends JFrame {
                  @Override
                  public void actionPerformed(ActionEvent e) {
                      accountNumberTXT.setText("");
-                     ownerLBL.setText("");
+                     ownerTXT.setText("");
                      citiesCMB.setSelectedIndex(0);
                      maleRDB.setSelected(true);
                      balanceTXT.setText("");
@@ -291,13 +291,23 @@ public class AccountFrame extends JFrame {
     }
     private void SearchTransactionList(int accNumber){
         List<Transaction> filteredList = new ArrayList<>();
-        //iteration
+        //iteration by source of all transaction list
         for (Transaction t: transList){
             //filter value contains accNumber
             if(t.getAccount().accountNumber == accNumber){
                 filteredList.add(t);
             }
 
+        }
+        //Display filtered list
+        for (int i = 0; i < filteredList.size(); i++){
+            //Display data into table.
+            tableModel.addRow(new Object[]{
+                    filteredList.get(i).getTransactionNumber(),
+                    filteredList.get(i).getDate(),
+                    filteredList.get(i).getOperation(),
+                    filteredList.get(i).getAmount()
+            });
         }
 
     }
